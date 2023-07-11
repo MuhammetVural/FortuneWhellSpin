@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:rxdart/rxdart.dart';
 
-class SpinWheel extends StatefulWidget {
-  const SpinWheel({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<SpinWheel> createState() => _SpinWheelState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _SpinWheelState extends State<SpinWheel> {
+class _HomeViewState extends State<HomeView> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
 

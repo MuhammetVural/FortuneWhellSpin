@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spin_well_fortune/spinwell_screen.dart';
+import 'package:spin_well_fortune/views/home_view.dart';
+import 'package:spin_well_fortune/views/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SpinWheel()
+      home: MySplashScreen()
     );
   }
 }
