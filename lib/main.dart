@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:spin_well_fortune/spinwell_screen.dart';
+import 'package:spin_well_fortune/views/cark.dart';
 import 'package:spin_well_fortune/views/home_view.dart';
+import 'package:spin_well_fortune/views/randomselection.dart';
 import 'package:spin_well_fortune/views/splash_view.dart';
 
 void main() {

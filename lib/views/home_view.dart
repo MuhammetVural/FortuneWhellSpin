@@ -12,10 +12,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
+   final TextEditingController _textFieldController = TextEditingController();
+   String _selectedItem = '';
 
-  List<int> items = [
-    100, 200, 500, 1000
-  ];
+    void _selectRandomItem() {
+    List<String> items = _textFieldController.text.split(',');
+  }
+    
 
   @override
   void dispose() {
