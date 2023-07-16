@@ -3,7 +3,8 @@ import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  final List<String> items;
+  const HomeView({Key? key, required this.items}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -12,13 +13,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
-   final TextEditingController _textFieldController = TextEditingController();
-   String _selectedItem = '';
-
-    void _selectRandomItem() {
-    List<String> items = _textFieldController.text.split(',');
-  }
-    
 
   @override
   void dispose() {
@@ -51,9 +45,9 @@ class _HomeViewState extends State<HomeView> {
                 ],
                 animateFirst: false,
                 items: [
-                  for(int i = 0; i < items.length; i++)...<FortuneItem>{
+                  for(int i = 0; i < widget.items.length; i++)...<FortuneItem>{
                     FortuneItem(
-                      child: Text(items[i].toString() , style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold),),
+                      child: Text(widget.items[i].toString() , style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold),),
                       style: FortuneItemStyle(
                         color: Colors.greenAccent,
                         borderColor: Colors.black,
@@ -65,10 +59,6 @@ class _HomeViewState extends State<HomeView> {
                   },
                 ],
                 onAnimationEnd: () {
-                  setState(() {
-                    rewards = items[selected.value];
-                  });
-                  print(rewards);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text("You just won " + rewards.toString() + " Points!"),
@@ -80,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  selected.add(Fortune.randomInt(0, items.length));
+                  selected.add(Fortune.randomInt(0, widget.items.length));
                 });
               },
               child: Container(

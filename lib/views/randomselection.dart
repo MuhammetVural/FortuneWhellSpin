@@ -1,79 +1,83 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:spin_well_fortune/views/home_view.dart';
 
-void main() => runApp(RandomSelectionApp());
+void main() => runApp(InputListApp());
 
-class RandomSelectionApp extends StatelessWidget {
+class InputListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Random Selection',
+      title: 'Input List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RandomSelectionScreen(),
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/') {
+          return MaterialPageRoute(
+            builder: (context) => InputListScreen(),
+          );
+        } else if (settings.name == '/list') {
+          final List<String> items = settings.arguments as List<String>;
+          return MaterialPageRoute(
+            builder: (context) => ListScreen(items: items),
+          );
+        }
+        else if (settings.name == '/home') {
+          final List<String> items = settings.arguments as List<String>;
+          return MaterialPageRoute(
+            builder: (context) => HomeView(items: items),
+          );
+        }
+        return null;
+      },
     );
   }
 }
 
-class RandomSelectionScreen extends StatefulWidget {
+class InputListScreen extends StatefulWidget {
   @override
-  _RandomSelectionScreenState createState() => _RandomSelectionScreenState();
+  _InputListScreenState createState() => _InputListScreenState();
 }
 
-class _RandomSelectionScreenState extends State<RandomSelectionScreen> {
-  final TextEditingController _textFieldController = TextEditingController();
-  String _selectedItem = '';
+class _InputListScreenState extends State<InputListScreen> {
+  final TextEditingController _inputController = TextEditingController();
+  List<String> _items = [];
 
-  void _selectRandomItem() {
-    List<String> items = _textFieldController.text.split(',');
-    if (items.isNotEmpty) {
-      Random random = Random();
-      int randomIndex = random.nextInt(items.length);
-      setState(() {
-        _selectedItem = items[randomIndex];
-      });
-    } else {
-      setState(() {
-        _selectedItem = 'Veri girilmedi.';
-      });
-    }
+  void _addItemToList() {
+    setState(() {
+      _items.add(_inputController.text);
+      _inputController.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Random Selection'),
+        title: Text('Input List'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _textFieldController,
-                decoration: InputDecoration(
-                  hintText: 'Öğeleri virgülle ayırarak girin',
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _inputController,
+              decoration: InputDecoration(
+                labelText: 'Değer girin',
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _selectRandomItem,
-                child: Text('Rastgele Seç'),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Seçilen Öğe:',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Text(
-                _selectedItem,
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+            ),
+            ElevatedButton(
+              onPressed: _addItemToList,
+              child: Text('Ekle'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home', arguments: _items);
+              },
+              child: Text('Listeyi Göster'),
+            ),
+          ],
         ),
       ),
     );
@@ -81,7 +85,40 @@ class _RandomSelectionScreenState extends State<RandomSelectionScreen> {
 
   @override
   void dispose() {
-    _textFieldController.dispose();
+    _inputController.dispose();
     super.dispose();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+class ListScreen extends StatelessWidget {
+  final List<String> items;
+
+  ListScreen({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Liste'),
+      ),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(items[index]),
+          );
+        },
+      ),
+    );
   }
 }
