@@ -31,16 +31,12 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(
               height: 300,
               child: FortuneWheel(
-
                 selected: selected.stream,
                 indicators: [
                   FortuneIndicator(
                     alignment: Alignment.topCenter,
                     child: TriangleIndicator(
-                    
-                    color: Colors.amber,
-                    
-                    
+                    color: Colors.black,
                   ))
                 ],
                 animateFirst: false,
@@ -50,18 +46,20 @@ class _HomeViewState extends State<HomeView> {
                       child: Text(widget.items[i].toString() , style: TextStyle(color: Colors.black , fontWeight: FontWeight.bold),),
                       style: FortuneItemStyle(
                         color: Colors.greenAccent,
-                        borderColor: Colors.black,
-                        borderWidth: 5
-
-
-                      )
+                        borderColor: Colors.white,
+                        borderWidth: 3
+                        )
                     ),
                   },
                 ],
                 onAnimationEnd: () {
+                  setState(() {
+                   //rewards = items[selected.value];
+                  });
+                  print(rewards);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("You just won " + rewards.toString() + " Points!"),
+                      content: Text("Bugünün harika geçeceği şimdiden belli oldu" + rewards.toString() + " Points!"),
                     ),
                   );
                 },
@@ -69,9 +67,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             GestureDetector(
               onTap: () {
-                setState(() {
-                  selected.add(Fortune.randomInt(0, widget.items.length));
-                });
+                
               },
               child: Container(
                 height: 40,
