@@ -66,9 +66,7 @@ class _HomeViewState extends State<HomeView> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                          "Bugünün harika geçeceği şimdiden belli oldu" +
-                              rewards.toString() +
-                              " Points!"),
+                          "Bugünün harika geçeceği şimdiden belli oldu" ),
                     ),
                   );
                 },

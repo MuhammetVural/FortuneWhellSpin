@@ -66,7 +66,7 @@ class _InputListScreenState extends State<InputListScreen> {
               showCursor: true,
               onChanged: (val) {},
               controller: _inputController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.name,
               decoration: InputDecoration(
                   labelText: "Çevirmeden Önce Seçenekleri Ekleyin",
                   labelStyle: TextStyle(
@@ -127,7 +127,15 @@ class _InputListScreenState extends State<InputListScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/home', arguments: _items);
+                    if (_items.length < 2) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("En az iki seçenek girilmelidir"),
+                        ),
+                      );
+                    } else {
+                      Navigator.pushNamed(context, '/home', arguments: _items);
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(
