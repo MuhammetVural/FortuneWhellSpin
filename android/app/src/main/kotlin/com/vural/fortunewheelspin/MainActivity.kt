@@ -1,4 +1,4 @@
-package com.example.spin_well_fortune
+package com.vural.fortunewheelspin
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.spin_well_fortune">
+    package="com.vural.fortunewheelspin">
    <application
-        android:label="spin_well_fortune"
+        android:label="Karar Çarkı"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
