@@ -7,6 +7,7 @@ class InputListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Input List',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -43,9 +44,14 @@ class _InputListScreenState extends State<InputListScreen> {
   final TextEditingController _inputController = TextEditingController();
   List<String> _items = [];
 
+  void resetList() {
+    _items.clear();
+  }
+
   void _addItemToList() {
     setState(() {
       _items.add(_inputController.text);
+
       _inputController.clear();
     });
   }
@@ -99,19 +105,26 @@ class _InputListScreenState extends State<InputListScreen> {
               height: 20,
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () {
-                    _addItemToList();
+                    if (_inputController.text.isNotEmpty) {
+                      _addItemToList();
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Çarka boş karakter girilemez"),
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Color.fromARGB(255, 255, 107, 107)),
                     height: 40,
-                    width: 120,
+                    width: 90,
                     child: Center(
                       child: Text(
                         "Ekle",
@@ -121,9 +134,6 @@ class _InputListScreenState extends State<InputListScreen> {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 30,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -142,10 +152,35 @@ class _InputListScreenState extends State<InputListScreen> {
                         borderRadius: BorderRadius.circular(10),
                         color: Color.fromARGB(255, 255, 107, 107)),
                     height: 40,
-                    width: 120,
+                    width: 90,
                     child: Center(
                       child: Text(
                         "Çarka Git",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 26, 83, 92),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    resetList();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Çark temizleme işlemi tamamlandı"),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 255, 107, 107)),
+                    height: 40,
+                    width: 100,
+                    child: Center(
+                      child: Text(
+                        "Çarkı Temizle",
                         style: TextStyle(
                             color: Color.fromARGB(255, 26, 83, 92),
                             fontWeight: FontWeight.bold),
